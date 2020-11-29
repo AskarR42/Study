@@ -1,0 +1,33 @@
+def create(namespace, parent):
+    global namespaces
+    
+    new_namespace = {"parent" : parent, "vars" : []}
+    namespaces[namespace] = new_namespace
+
+def add(namespace, var):
+    global namespaces
+    
+    namespaces[namespace]["vars"].append(var)
+    
+def get(namespace, var):
+    global namespaces
+    
+    if var in namespaces[namespace]["vars"]:
+        return namespace
+    elif namespace == "global":
+        return "None"
+    else:
+        return get(namespaces[namespace]["parent"], var)
+
+namespaces = {"global" : {"parent" : None, "vars" : []}}
+
+n = int(input())
+for i in range(n):
+    comand, namespace, parent_or_var = input().split()
+    
+    if comand == "create":
+        create(namespace, parent_or_var)
+    elif comand == "add":
+        add(namespace, parent_or_var)
+    else:
+        print(get(namespace, parent_or_var))
