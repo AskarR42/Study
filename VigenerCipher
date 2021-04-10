@@ -1,0 +1,40 @@
+# Realisation of Viginere Cipher with Euler's number key
+# Rodin Askar
+
+class VigenereCipher(object):
+    # Key and alphabet are allocated in files of the project
+    # text is a file with text which is to encode or decode
+    def __init__(self, key, alphabet, text):
+        self.key = key
+        self.alphabet = alphabet
+        self.text = text.read()
+
+    def encode(self):
+        encoded_text = ""
+        for i in range(len(self.original_text)):
+            letter_index = self.alphabet.find(self.original_text[i])
+            shift = int(self.key[i])
+
+            if letter_index >= 0:
+                encoded_text += self.alphabet[(letter_index + shift) % len(self.alphabet)]
+            else:
+                encoded_text += self.original_text[i]
+
+        # creates file with the encoded message
+        with open ("encoded_text", "w") as en:
+            en.write(encoded_text)
+
+    def decode(self):
+        decoded_text = ''
+        for i in range(len(self.riginal_text)):
+            letter_index = self.alphabet.find(self.original_text[i])
+            shift = int(self.key[i])
+
+            if letter_index >= 0:
+                decoded_text += self.alphabet[(letter_index - shift) % len(self.alphabet)]
+            else:
+                decoded_text += self.original_text[i]
+
+        # creates file with the decoded message
+        with open("decoded_text.txt", "w") as de:
+            de.write(decoded_text)
