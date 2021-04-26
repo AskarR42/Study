@@ -1,0 +1,61 @@
+public class Search {
+
+    public static int linearSearch(int[] array, int target) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == target) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int jumpSearch(int[] array, int target) {
+        int currentRight = 0; // right boarder of the current block
+        int prevRight = 0; // right boarder of the previous block
+
+        // if array is empty the target is not found
+        if (array.length == 0) {
+            return -1;
+        }
+
+        // check the first element
+        if (array[currentRight] == target) {
+            return 0;
+        }
+
+        // calculating the jump length over array elements
+        int jumpLength = (int) Math.sqrt(array.length);
+
+        // finding a block where the element may be presented
+        while (currentRight < array.length - 1) {
+
+            // calculating the right boarder of the following block
+            currentRight = Math.min(array.length - 1, currentRight + jumpLength);
+
+            if (array[currentRight] > target) {
+                break; // found block that may contain the target
+            }
+
+            prevRight = currentRight;
+        }
+
+        // if the last block is reached and it cannot contain the target => not found
+        if (currentRight == array.length - 1 && target > array[currentRight]) {
+            return -1;
+        }
+
+        // doing linear search in the found block
+        return backwardSearch(array, target, prevRight, currentRight);
+    }
+
+    private static int backwardSearch(int[] array, int target, int leftExc, int rightInc) {
+        for (int i = rightInc; i > leftExc; i--) {
+            if (array[i] == target) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
