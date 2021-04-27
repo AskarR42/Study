@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class Main {
+
+    private static final int MOD = (int) (1e9 + 7);
+
+    private int fibonacci(int n) {
+        int a = 0;
+        int b = 1;
+        for (int i = 0; i < n; i++) {
+            int c = (a + b) % MOD;
+            a = b;
+            b = c;
+        }
+        return a;
+    }
+
+    private void run(int n) {
+        System.out.printf( "fibonacci(%d) MOD %d: %d \n", n, MOD, fibonacci(n));
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("n: ");
+        int n = scanner.nextInt();
+
+        long startTime = System.currentTimeMillis();
+        new Main().run(n);
+        long finishTime = System.currentTimeMillis();
+
+        System.out.println("Time: " + (finishTime - startTime) + "ms");
+    }
+}
